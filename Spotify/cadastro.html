@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Spotify</title>
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="icon" href="logo.png">
+</head>
+
+<body>
+    <div class="container">
+        <img src="logo.png" width="130px"<br><br>
+        <h1><strong>Spotify - Criar conta</strong></h1>
+
+        <form action="cadastro.php" method="post">
+            <label>Nome</label>
+            <input type="text" name="nome" required><br><br>
+            <label>E-mail</label>
+            <input type="email" name="email" required><br><br>
+            <label>Senha</label>
+            <input type="password" name="senha" required><br><br>
+            <label>Data de nascimento</label>
+            <input type="date" name="data_nascimento" required><br><br>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <br>
+        <a href="login.html"> Ir para o Login</a>
+    </div>
+</body>
+</html>
