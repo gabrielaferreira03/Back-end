@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 👉 TROQUE o título da aba do navegador -->
+  <title>Tema 1 — Regiões do Brasil</title>
+
+  <!-- =========================================================
+       CSS DA PÁGINA (fica tudo aqui para o arquivo funcionar sozinho)
+       Mude as cores no bloco :root logo abaixo.
+  ========================================================== -->
+  
+  
+  <style>
+    :root {
+      --cor-fundo:    #eef3f7;
+      --cor-texto:    #16202b;
+      --cor-suave:    #5b6b7a;
+      --cor-cartao:   #ffffff;
+      --cor-destaque: #1f7a8c;  /* cor do botão selecionado */
+      --cor-borda:    #d6e0e8;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: rgb(255, 206, 206);
+      color: rgb(0, 39, 86);
+      line-height: 1.6;
+    }
+    .pagina { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+
+    /* ---- Topo com o botão de voltar ---- */
+    .voltar {
+      display: inline-block; text-decoration: none;
+      color: var(--cor-suave); font-weight: bold; margin-bottom: 20px;
+    }
+    .voltar:hover { color: black; }
+
+    header h1 { font-size: 32px; margin: 0 0 6px; }
+    header p.intro { color: var(--cor-suave); margin: 0 0 28px; }
+
+    /* =========================================================
+         OS 5 BOTÕES (modo "select")
+         O botão clicado fica colorido; os outros ficam apagados.
+    ========================================================== */
+    .botoes {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px;
+    }
+    .botoes button {
+      font-family: inherit; font-size: 15px; font-weight: bold;
+      padding: 11px 20px; border-radius: 30px; cursor: pointer;
+      background: var(--cor-cartao); color: var(--cor-texto);
+      border: 2px solid var(--cor-borda);
+    }
+    .botoes button:hover { border-color: var(--cor-destaque); }
+    .botoes button.ativo {
+      background: var(--cor-destaque); color: #fff; border-color: var(--cor-destaque);
+    }
+
+    /* ---- Botão do Quiz (é um link que leva para o quiz.php) ---- */
+    .botoes a.botao-quiz {
+      font-family: inherit; font-size: 15px; font-weight: bold;
+      padding: 11px 20px; border-radius: 30px; text-decoration: none;
+      background: #e07a1f; color: #fff; border: 2px solid #e07a1f;
+    }
+    .botoes a.botao-quiz:hover { background: #c4660f; border-color: #c4660f; }
+
+    /* =========================================================
+         O CONTEÚDO
+         Cada bloco .conteudo fica escondido até o aluno clicar no botão.
+    ========================================================== */
+    .conteudo { display: none; }          /* escondido por padrão */
+    .conteudo.aberto { display: block; }   /* aparece quando recebe a classe "aberto" */
+
+    .cartao-conteudo {
+      background: var(--cor-cartao);
+      border: 1px solid var(--cor-borda);
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.06);
+    }
+    .cartao-conteudo h2 { margin: 0 0 14px; font-size: 24px; color: var(--cor-destaque); }
+    .cartao-conteudo p  { margin: 0 0 14px; }
+    .cartao-conteudo abbr {
+      position: relative;
+      text-decoration: underline dotted;
+      text-underline-offset: 2px;
+      cursor: help;
+      font-weight: 600;
+    }
+    .cartao-conteudo abbr:hover::after,
+    .cartao-conteudo abbr:focus::after {
+      content: attr(title);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 8px);
+      transform: translateX(-50%);
+      background: rgba(22, 32, 43, 0.95);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.4;
+      padding: 6px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      z-index: 10;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.16);
+    }
+
+    /* ---- A imagem ---- */
+    .foto { margin: 0 0 18px; }
+    .foto img {
+      width: 100%; max-width: 100%; height: auto;
+      border-radius: 12px; display: block; background: #dfe8ef;
+    }
+    .foto figcaption {
+      font-size: 13px; color: var(--cor-suave); margin-top: 8px; text-align: center;
+    }
+
+    .rodape-inicial {
+    background-color: #1f7a8c;
+    color: #F7F1ED;
+    text-align: center;
+    padding: 18px;
+    margin-top: 20px;
+    }
+
+
+    .rodape-inicial p {
+    font-size: 13px;
+    margin: 0;
+    }
+
+    
+
+    @media (max-width: 500px) {
+      header h1 { font-size: 26px; }
+      .cartao-conteudo { padding: 20px; }
+    }
+
+    body {
+    background-image: url("fundo.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; }
+  </style>
+</head>
+
+<body>
+  <div class="pagina">
+
+    <!-- Volta para o carrossel -->
+    <a class="voltar" href="index.html">← Voltar aos temas</a>
+
+    <heater>
+      <!-- 👉 TROQUE o título e a introdução do seu tema -->
+      <h1>ESTADOS UNIDOS x CHINA</h1>
+      <p class="intro">Clique nos botões abaixo para obter mais informações </p>
+    </heater>
+
+    <!-- =========================================================
+         OS 5 BOTÕES
+         Cada botão chama abrir('idDoConteudo').
+         👉 TROQUE o texto dos botões pelo nome dos seus 5 assuntos.
+    ========================================================== -->
+    <div class="botoes">
+      <button class="ativo" onclick="abrir('norte', this)">Onde acontece o conflito</button>
+      <button onclick="abrir('nordeste', this)">Como surgiu o conflito</button>
+      <button onclick="abrir('centrooeste', this)">Quem participa</button>
+      <button onclick="abrir('sudeste', this)">Quais interesses?</button>
+      <button onclick="abrir('sul', this)">Quais os impactos</button>
+      <button onclick="abrir('mapa', this)">Mapa Sobre o Conflito</button>
+      <button onclick="abrir('graficos', this)">Gráficos Relacionados</button>
+      <button onclick="abrir('video', this)">Vídeo China e EUA</button>
+      <button onclick="abrir('fontes', this)">Referências Utilizadas</button>
+      <a class="botao-quiz" href="quiz.php">📝 Quiz</a>
+    </div>
+
+    <!-- =========================================================
+         OS 5 CONTEÚDOS
+         Cada bloco tem um id (ex.: id="norte") igual ao do botão.
+         O primeiro já está com a classe "aberto" para aparecer logo.
+
+         👉 PARA EDITAR: troque o <h2>, os <p> e a imagem de cada bloco.
+         👉 IMAGEM: crie uma pasta chamada "imagens" ao lado deste arquivo
+            e coloque suas fotos lá. Depois escreva o nome no src, por ex.:
+            <img src="imagens/norte.jpg" ...>
+            Enquanto não tiver imagem, aparece um espaço cinza no lugar.
+    ========================================================== -->
+
+    <div class="conteudo aberto" id="norte">
+      <div class="cartao-conteudo">
+        <h2>Onde aconteceu o conflito</h2>
+        <figure class="foto">
+          <img src="china.png" alt="Estados Unidos e China" onerror="semImagem(this)">
+          <figcaption>Estados Unidos vs China</figcaption>
+        </figure>
+        <p>O embate geopolítico entre os Estados Unidos da América e a República Popular da China possui uma dimensão global, mas o seu epicentro geográfico está na região do <strong>Indo-Pacífico</strong>. A disputa envolve duas potências com projeção econômica, militar e tecnológica, e se manifesta por meio de pressões diplomáticas, sanções comerciais, presença militar e disputa por tecnologia, recursos e rotas marítimas.</p>
+        <ul>
+          <li><strong>Países envolvidos:</strong> <abbr title="Estados Unidos da América">EUA</abbr> e <abbr title="República Popular da China">RPC</abbr>.</li>
+          <li><strong>Capitais:</strong> Washington, D.C. (<abbr title="Estados Unidos da América">EUA</abbr>) e Pequim (China).</li>
+          <li><strong>Continente:</strong> América do Norte (<abbr title="Estados Unidos da América">EUA</abbr>) e Ásia (China).</li>
+          <li><strong>Fronteiras:</strong> Os <abbr title="Estados Unidos da América">EUA</abbr> são banhados pelos oceanos Atlântico e Pacífico e fazem fronteira terrestre com Canadá e México. A China está no Leste Asiático, possui a maior fronteira terrestre contínua do planeta, delimitada por 14 países, e uma extensa costa voltada para o Oceano Pacífico, incluindo mares marginais como o Mar do Japão, o Mar Amarelo e o Mar da China Oriental.</li>
+          <li><strong>Localização geográfica:</strong> Os <abbr title="Estados Unidos da América">EUA</abbr> ocupam o Hemisfério Ocidental, enquanto a China situa-se no Hemisfério Oriental. Os pontos de atrito ocorrem a poucas milhas do litoral chinês e em bases militares dos <abbr title="Estados Unidos da América">EUA</abbr> em países aliados, como Japão, Coreia do Sul, Filipinas e Guam.</li>
+          <li><strong>Recursos naturais existentes:</strong> Os <abbr title="Estados Unidos da América">EUA</abbr> destacam-se pela energia de petróleo e gás de xisto, além de terras aráveis, madeira, potássio e minerais. A China detém um importante controle sobre terras raras, carvão, minério de ferro, bauxita, lítio e potencial hidrelétrico.</li>
+          <li><strong>Importância estratégica da região:</strong> O Indo-Pacífico concentra rotas marítimas essenciais para a economia mundial. Pelo Mar da China Meridional passam grandes fluxos de petróleo, gás e mercadorias, e a Ilha de Taiwan é fundamental para a produção de semicondutores avançados, que são essenciais para a tecnologia, a indústria militar e a economia digital global. Enquanto a China impulsionada por seu gigantismo industrial, pelo controle de cadeias produtivas e pela Iniciativa Cinturão e Rota, a China expande sua influência econômica e capacidade militar para garantir o acesso a recursos globais e desafiar a hegemonia ocidental.</li>
+        </ul>
+        <footer class="rodape-inicial">
+        <p>EUA x CHINA - Página Feita por Mariana Praxedes Branco</p>
+    </footer>
+    </div>
+    </div>
+
+    <div class="conteudo" id="nordeste">
+      <div class="cartao-conteudo">
+        <h2>Como surgiu o conflito</h2>
+        <figure class="foto">
+          <img src="imagens/nordeste.jpg" alt="Contexto histórico do conflito" onerror="semImagem(this)">
+          <figcaption>Contexto histórico do confronto.</figcaption>
+        </figure>
+        <p>A relação entre Washington e Pequim passou por profundas transformações nas últimas décadas. Durante a Guerra Fria, após anos de hostilidade, os dois países ensaiaram uma aproximação pragmática na década de 1970 para conter a União Soviética. Esse movimento culminou na integração da China ao sistema capitalista mundial e em sua entrada na Organização Mundial do Comércio (<abbr title="Organização Mundial do Comércio">OMC</abbr>) em 2001. No entanto, a transição da China de fornecedora de mão de obra barata para potência tecnológica e industrial de primeira grandeza transformou a integração econômica em uma competição sistêmica pela hegemonia internacional.</p>
+        <p><strong>Contexto histórico e fatores determinantes:</strong> A disputa cresce em função da rivalidade entre o modelo ocidental de democracia liberal capitalista e o capitalismo de Estado do Partido Comunista Chinês (<abbr title="Partido Comunista Chinês">PCC</abbr>). O confronto também se fortalece pela disputa por influência regional, tecnologia, cadeias produtivas e controle de rotas comerciais e estratégicas.</p>
+        <ul>
+          <li><strong>Disputas políticas:</strong> Confronto entre a democracia liberal capitalista ocidental (<abbr title="Estados Unidos da América">EUA</abbr>) e o modelo autoritário de capitalismo de Estado sob o comando do <abbr title="Partido Comunista Chinês">PCC</abbr>. Há divergências sobre o status de soberania de Taiwan, questões de direitos humanos e a ordem internacional.</li>
+          <li><strong>Fatores econômicos:</strong> Destacam-se o déficit comercial dos <abbr title="Estados Unidos da América">EUA</abbr> em relação à China, acusações de roubo de propriedade intelectual, transferência forçada de tecnologia, subsídios estatais e controle das cadeias globais de produção e inovação.</li>
+          <li><strong>Fatores religiosos:</strong> Não são a causa central do conflito, mas funcionam como ponto de fricção diplomática, especialmente em relação a denúncias de violações contra minorias muçulmanas uigures em Xinjiang e budistas no Tibete.</li>
+          <li><strong>Fatores étnicos:</strong> Há crescimento do nacionalismo em ambos os países e controvérsias diplomáticas ligadas a minorias étnicas, a identidade taiwanesa e a autonomia de regiões interioranas da China.</li>
+        </ul>
+        <p><strong>Linha do tempo:</strong></p>
+        <ul>
+          <li><strong>1949:</strong> Revolução Chinesa; vitória do Partido Comunista Chinês (<abbr title="Partido Comunista Chinês">PCC</abbr>) e fundação da República Popular da China (<abbr title="República Popular da China">RPC</abbr>). As forças nacionalistas recuam para Taiwan.</li>
+          <li><strong>1972:</strong> Visita histórica de Richard Nixon a Pequim, inaugurando uma diplomacia pragmática entre os dois países.</li>
+          <li><strong>1979:</strong> Normalização diplomática e aprovação do Taiwan Relations Act, mantendo apoio militar e diplomático a Taiwan.</li>
+          <li><strong>2001:</strong> Entrada da China na Organização Mundial do Comércio (<abbr title="Organização Mundial do Comércio">OMC</abbr>), acelerando seu crescimento econômico e industrial.</li>
+          <li><strong>2011:</strong> Estratégia do “Pivot to Asia”, com redirecionamento da política externa e militar dos <abbr title="Estados Unidos da América">EUA</abbr> para o Indo-Pacífico.</li>
+          <li><strong>2013:</strong> Lançamento da Iniciativa Belt and Road e início da construção de ilhas artificiais no Mar da China Meridional.</li>
+          <li><strong>2018:</strong> Eclosão da guerra comercial, com tarifas impostas pelos <abbr title="Estados Unidos da América">EUA</abbr> e retaliações da China.</li>
+          <li><strong>2022 a 2026:</strong> Guerra dos chips, sanções tecnológicas e intensificação de exercícios militares chineses ao redor de Taiwan.</li>
+        </ul>
+         <footer class="rodape-inicial">
+        <p>EUA x CHINA - Página Feita por Mariana Praxedes Branco, Cauê da Silva, Gabriela da Silva Oliveira e Samuel Salomão</p>
+    </footer>
+      </div>
+    </div>
+
+    <div class="conteudo" id="centrooeste">
+      <div class="cartao-conteudo">
+        <h2>Quem participa</h2>
+        <figure class="foto">
+          <img src="imagens/centrooeste.jpg" alt="Participantes do conflito" onerror="semImagem(this)">
+          <figcaption>Principais atores do conflito.</figcaption>
+        </figure>
+        <p>O conflito envolve diretamente o <strong>Governo Federal dos <abbr title="Estados Unidos da América">EUA</abbr></strong> e o <strong>Governo da República Popular da China (<abbr title="República Popular da China">RPC</abbr>)</strong>, liderado pelo Partido Comunista Chinês (<abbr title="Partido Comunista Chinês">PCC</abbr>). Como ator central da disputa geopolítica e territorial, participa também o <strong>Governo de Taiwan</strong>, que busca preservar sua autonomia política e seu sistema democrático.</p>
+        <ul>
+          <li><strong>Governos envolvidos:</strong> Estados Unidos, China e Taiwan.</li>
+          <li><strong>Grupos armados:</strong> As forças atuantes são essencialmente estatais e regulares. Pelo lado norte-americano, destacam-se as Forças Armadas dos <abbr title="Estados Unidos da América">EUA</abbr>, incluindo o Comando do Indo-Pacífico e a 7ª Frota Naval. Pelo lado chinês, atua o Exército de Libertação Popular (<abbr title="Exército de Libertação Popular">ELP</abbr>), com destaque para a Marinha e a Força de Foguetes Estratégicos.</li>
+          <li><strong>Organizações internacionais:</strong> Organização das Nações Unidas (<abbr title="Organização das Nações Unidas">ONU</abbr>), Organização Mundial do Comércio (<abbr title="Organização Mundial do Comércio">OMC</abbr>), Fundo Monetário Internacional (<abbr title="Fundo Monetário Internacional">FMI</abbr>), G20 e APEC.</li>
+          <li><strong>Potências e blocos estrangeiros:</strong> AUKUS, QUAD, União Europeia, Coreia do Sul, Filipinas, Rússia, Irã, Coreia do Norte, BRICS e Organização para Cooperação de Xangai (<abbr title="Organização para Cooperação de Xangai">OCS</abbr>).</li>
+        </ul>
+         <footer class="rodape-inicial">
+        <p>EUA x CHINA - Página Feita por Samuel Salomão</p>
+    </footer>
+      </div>
+    </div>
+
+    <div class="conteudo" id="sudeste">
+      <div class="cartao-conteudo">
+        <h2>Quais interesses estão envolvidos</h2>
+        <figure class="foto">
+          <img src="imagens/sudeste.jpg" alt="Interesses geopolíticos" onerror="semImagem(this)">
+          <figcaption>Interesses estratégicos do conflito.</figcaption>
+        </figure>
+        <ul>
+          <li><strong>Petróleo e gás natural:</strong> Ambos os países buscam garantir o controle das rotas marítimas e o acesso às reservas energéticas do Indo-Pacífico.</li>
+          <li><strong>Minérios:</strong> A disputa também envolve o acesso a recursos críticos para a indústria tecnológica e militar, como terras raras, lítio, cobalto, níquel, gálio e cobre.</li>
+          <li><strong>Água:</strong> O planalto tibetano e os rios que atravessam o Sudeste Asiático têm importância estratégica para abastecimento, agricultura e influência regional.</li>
+          <li><strong>Rotas comerciais:</strong> A China busca ampliar sua presença em rotas marítimas e terrestres, enquanto os <abbr title="Estados Unidos da América">EUA</abbr> atuam para garantir a livre navegação internacional e o acesso a mercados estratégicos.</li>
+          <li><strong>Territórios disputados:</strong> Ilha de Taiwan, arquipélagos Spratly e Paracel e Ilhas Senkaku/Diaoyu, além de áreas de projeção naval e aérea no Pacífico.</li>
+          <li><strong>Influência internacional:</strong> Há disputa por liderança tecnológica, hegemonia financeira, soberania digital, normas comerciais e capacidade de reorganizar a ordem internacional.</li>
+        </ul>
+        <footer class="rodape-inicial">
+        <p>EUA x CHINA - Página Feita por Cauê da Silva</p>
+        </footer>
+      </div>
+    </div>
+
+    <div class="conteudo" id="sul">
+      <div class="cartao-conteudo">
+        <h2>Quais são os impactos</h2>
+        <figure class="foto">
+          <img src="imagens/sul.jpg" alt="Impactos do conflito" onerror="semImagem(this)">
+          <figcaption>Consequências geopolíticas e econômicas.</figcaption>
+        </figure>
+        <p>A rivalidade sino-americana constitui uma <strong>Guerra Fria tecnológica e geopolítica</strong>, sem registro de confrontos militares diretos entre as Forças Armadas dos dois países. Mesmo sem guerra aberta, o conflito afeta o sistema financeiro, a indústria, a tecnologia, a diplomacia e a percepção de segurança de vários países. Em regiões estratégicas como o Sudeste Asiático e o Estreito de Taiwan, a tensão causa incerteza econômica e militar.</p>
+        <ul>
+          <li><strong>Mortos, feridos, refugiados e deslocados internos:</strong> Não há registros diretos de mortos e feridos em combates diretos entre os dois países, mas há impactos indiretos em populações de regiões tensionadas, além de denúncias sobre deslocamentos forçados e violações de direitos humanos em áreas contestadas.</li>
+          <li><strong>Impactos econômicos:</strong> Reorganização das cadeias produtivas, tarifas protecionistas, sanções tecnológicas, pressão sobre o comércio internacional e maior volatilidade nos mercados globais.</li>
+          <li><strong>Impactos sociais:</strong> Aumento do nacionalismo, xenofobia, restrições a intercâmbios acadêmicos e diplomáticos, bem como tensão na população de Taiwan, Hong Kong e em países do Sudeste Asiático.</li>
+          <li><strong>Impactos ambientais:</strong> Construção militar em áreas marítimas, danos aos ecossistemas marinhos e recifes de corais no Mar da China Meridional, além de dificuldades para cooperação climática internacional.</li>
+        </ul>
+           <footer class="rodape-inicial">
+        <p>EUA x CHINA - Página Feita por Gabriela da Silva Ferreira</p>
+        </footer>
+      </div>
+    </div>
+
+    <div class="conteudo" id="mapa">
+      <div class="cartao-conteudo">
+        <h2>Mapa Sobre o Conflito</h2>
+        <figure class="foto">
+          <img src="mapa.png" alt="Impactos do conflito" onerror="semImagem(this)">
+          <figcaption>Consequências geopolíticas e econômicas.</figcaption>
+        </figure>
+        <p><strong> 🔍 EXPLICAÇÃO SOBRE: </strong></p>
+        <p>O mapa acima, aborda os conflitos dos <strong>Estados Unidos contra a China</strong>, mostrando a rivalidade entre os dois países. Na região asiática e no oceano pacifico, podendo observar a <strong>distribuição das bases militares americanas</strong>, os países aliados e as linhas estratégicas de ilhas. Essas posições são importantes porque permitem aos Estados Unidos manter sua <strong>influência militar e estratégica na região</strong>, enquanto a China busca ampliar seu poder e sua influência.</p>
+        <p>Apresentando as bases militares dos Estados Unidos, com os <strong>locais  navais e instalações militares</strong>, como Japão, Coreia do Sul, Guam e Filipinas. Mostra três linhas estratégicas de ilhas utilizadas para representar áreas de contenção e influência militar no Oceano Pacífico.</p>
+           <footer class="rodape-inicial">
+        <p>EUA x CHINA - Página Feita por Mariana Praxedes Branco</p>
+        </footer>
+      </div>
+    </div>
+
+    <div class="conteudo" id="graficos">
+      <div class="cartao-conteudo">
+        <h2>Gráficos Sobre o Conflito</h2>
+        <figure class="foto">
+          <img src="grafico_pib_paisagem.png" alt="Gráfico 1" height="200px">
+          <figcaption>Estados Unidos  em 2000, o PIB era de US$ 10,3 trilhões. Em 2024, obteve um aumento que chegou a US$ 29,2 trilhões.</figcaption>
+          <figcaption>Por outro lado a China em 2000, o PIB era de US$ 1,2 trilhão. Em 2024, chegou a US$ 18,3 trilhões. Projeções até 2029,  os Estados Unidos podem chegar a US$ 35,4 trilhões, enquanto a China pode alcançar US$ 24,6 trilhões.</figcaption>
+          <figcaption>Ou seja Os Estados Unidos e a China  teve um crescimento  econõmico, onde  o crescimento da China se aproxima da economia americana, os Estados Unidos continuam na liderança e as projeções indicam que devem permanecer com o maior PIB até 2029.</figcaption>
+          <br><hr><br>
+          <img src="grafico_tarifas_paisagem.png" alt="Gráfico 2" height="200px">
+          <figcaption>O gráfico mostra uma comparação entre os Estados Unidos e a China, onde devido a guerra comercial, apresentando as tarifas dos produtos importados e os materiais.</figcaption>
+          <figcaption>Ambos utilizam dos impostos como modo de pressão econômica, o que provoca tensões no comércio internacional.</figcaption>
+          <figcaption>Enquanto os Estados unidos aumentaram as tarifas, o que fez com que a china em reação aumentasse também, no entanto enquanto os EUA aumentaram em 145% a China aumentou em 125%. Quando os EUA diminuíram em 30%, a China diminuiu apenas 10%.</figcaption>
+        </figure>
+        
+        <footer class="rodape-inicial">
+          <p>EUA x CHINA - Página Feita por Gabriela Ferreira e Mariana Praxedes Branco</p>
+        </footer>
+      </div>
+    </div>
+
+    <div class="conteudo" id="video">
+      <div class="cartao-conteudo">
+        <h2>Mapa Sobre o Conflito</h2>
+        <figure class="foto">
+          <video src="https://www.youtube.com/watch?v=vIYDGWw6ybM" alt="vídeo EUA x CHINA" width="640" height="360" controls ></video>
+          <figcaption>China e EUA concordam com cortes tarifários em US$ 60 bilhões em produtos | CNN Mercado</figcaption>
+        </figure>
+        <p>O vídeo explica sobre a Guerra Comercial entre Estados Unidos e China, abordada em nosso trabalho.</p>
+        
+        <footer class="rodape-inicial">
+        <p>EUA x CHINA - Página Feita por Gabriela Ferreira e Mariana Praxedes Branco</p>
+        </footer>
+      </div>
+    </div>
+
+    <div class="conteudo" id="fontes">
+      <div class="cartao-conteudo">
+        <h2>Referências Utilizadas no Trabalho</h2>
+        <figure class="foto">
+          <img src="imagens/sul.jpg" alt="Impactos do conflito" onerror="semImagem(this)">
+          <figcaption>Consequências geopolíticas e econômicas.</figcaption>
+        </figure>
+        <p>Aqui colocamos alguns sites que usamos como <strong>fontes</strong> para todos os assustos que abordamos em nosso trabalho.</p>
+        <ul>
+          <li><a href="https://brasilescola.uol.com.br/guerras/china-x-eua.htm">China x EUA: o que provoca a tensão entre eles? - <strong>Brasil Escola</strong></a></li><br>
+          <li><a href="https://planetageo.com.br/guerra-comercial-entre-eua-e-china/#economia-mundial">Guerra Comercial entre EUA e China: causas, consequências e impactos no Brasil - <strong>Planetageo</strong></a></li><br>
+          <li><a href="https://chatgpt.com/s/t_6ac4dc5fa900819189214d1ff84cda3a">Como a Guerra afeta os outros países do mundo? - <strong>ChatGPT</strong></a></li><br>
+          <li><a href="https://querobolsa.com.br/enem/atualidades/mar-do-sul-da-china-disputas-importancia">Mar do Sul da China: entenda as disputas e a importância estratégica - <strong>Quero Bolsa</strong></a></li><br>
+          <li><a href="https://exame.com/mundo/china-da-mais-dois-meses-de-tregua-aos-eua-na-disputa-por-terras-raras/">China dá mais dois meses de trégua aos EUA na disputa por terras raras - <strong>Exame.</strong></a></li><br>
+          <li><a href="https://www.seudinheiro.com/2026/economia/china-e-eua-estao-reorganizando-a-economia-global-onde-o-brasil-entra-nessa-historia-mlim/">China e EUA estão reorganizando a economia global. Onde o Brasil entra nessa história? - <strong>SeuDinheiro</strong></a></li><br>
+          <li><a href="https://brasil.elpais.com/internacional/2021-09-25/estados-unidos-fortalecem-alianca-com-japao-india-e-australia-para-conter-avanco-da-china-no-indo-pacifico.html">Estados Unidos fortalecem aliança com Japão, Índia e Austrália para conter avanço da China no Indo-Pacífico - <strong>El País</strong></a></li><br>
+          <li><a href="https://lsa.umich.edu/content/dam/lrccs-assets/lrccs-documents/Ann%20Lin%20_%20US%20vs%20China_%20BBC%20News%20Brazil.pdf">How the rivalry between the US and China began, fueled by Trump's trade war - <strong>BBC News Brazil</strong></a> (documento em inglês)</li><br>
+          <li><a href="https://www.politize.com.br/eua-e-china-guerra-comercial/">EUA e China: entenda a guerra comercial! - <strong>Politize</strong></a></li><br>
+          <li><a href="https://www.bbc.com/portuguese/articles/creqq75dnn9o">O que guerra comercial entre EUA e China significa para o mundo - <strong>BBC News Brasil</strong></a></li><br>
+        </ul>
+           <footer class="rodape-inicial">
+        <p>EUA x CHINA - Página Feita por Gabriela da Silva Ferreira</p>
+        </footer>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- =========================================================
+       JAVASCRIPT DOS BOTÕES
+       abrir(): mostra o conteúdo certo e pinta o botão clicado.
+       semImagem(): deixa um espaço cinza quando a foto ainda não existe.
+       Você não precisa mexer aqui.
+  ========================================================== -->
+  <script>
+    function abrir(id, botao) {
+      // esconde todos os conteúdos
+      document.querySelectorAll('.conteudo').forEach(c => c.classList.remove('aberto'));
+      // mostra só o escolhido
+      document.getElementById(id).classList.add('aberto');
+      // tira o destaque de todos os botões e coloca só no clicado
+      document.querySelectorAll('.botoes button').forEach(b => b.classList.remove('ativo'));
+      botao.classList.add('ativo');
+    }
+
+    // Placeholder cinza quando a imagem não é encontrada
+    function semImagem(img) {
+      if (img.dataset.ok) return;            // evita repetir
+      img.dataset.ok = '1';
+      img.src = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340">' +
+        '<rect width="600" height="340" fill="#dfe8ef"/>' +
+        '<text x="300" y="165" font-family="Arial" font-size="22" fill="#7d8da0" ' +
+        'text-anchor="middle">Coloque sua imagem aqui</text>' +
+        '<text x="300" y="195" font-family="Arial" font-size="15" fill="#9aa8b8" ' +
+        'text-anchor="middle">' + img.getAttribute('src').split('?')[0] + '</text>' +
+        '</svg>'
+      );
+    }
+  </script>
+</body>
+</html>
